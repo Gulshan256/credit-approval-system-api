@@ -49,6 +49,22 @@ Credit Approval System  API is a Django application that provides RESTful APIs f
    python manage.py migrate
    ```
 
+7.  Data Import
+  Before starting the development server, run the following script to import data from Excle(xlsx) files:
+  
+   ```bash
+   python import_data.py
+   ```
+8. Database Sequence Reset
+  To ensure proper auto-incrementing sequence, set the next value of the sequence:
+  
+   ```bash
+   python manage.py dbshell
+   ```
+   ```bash
+   SELECT setval('customer_customer_id_seq', (SELECT MAX(customer_id) FROM customer) + 1);
+   SELECT setval('loan_id_seq', (SELECT MAX(id) FROM loan) + 1);
+   ```
 ## Usage
 
 ### Start the Development Server

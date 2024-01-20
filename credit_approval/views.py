@@ -24,16 +24,6 @@ def index(request):
 
 
 def import_data(request):
-    """
-    Import customer and loan data from Excel files.
-
-    Args:
-        request (HttpRequest): The HTTP request object.
-
-    Returns:
-        HttpResponse: The HTTP response object.
-
-    """
     ingest_customer_data.delay()
     ingest_loan_data.delay()
     return HttpResponse("Data import started")
@@ -57,21 +47,6 @@ def register_customer(request):
 
 
 
-
-# @api_view(['POST']) 
-# def check_eligibility(request):
-#     if request.method == 'POST':
-#         serializer = EligibilityCheckSerializer(data=request.data)
-
-#         if serializer.is_valid():
-#             print(serializer.validated_data)
-#             # The serializer's create method will handle the loan creation and response generation
-#             response_data = serializer.save()
-#             return Response(response_data, status=status.HTTP_200_OK)
-#         else:
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#     else:
-#         return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 
@@ -244,11 +219,8 @@ def create_loan(request):
 
 @api_view(['GET'])
 def view_loan_by_loan_id(request, loan_id):
-    print("loan_id  ",loan_id)
     try:
-        print("loan_id  ",loan_id)
         loan = Loan.objects.get(loan_id=loan_id)
-        print("loan  ",loan)
         serializer = LoanDetailsSerializer({
             'loan_id': loan.loan_id,
             'customer': {
