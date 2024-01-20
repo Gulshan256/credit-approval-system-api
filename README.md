@@ -1,5 +1,4 @@
 
-```markdown
 # Credit Approval System  API
 
 Credit Approval System  API is a Django application that provides RESTful APIs for managing customer loans.
@@ -63,7 +62,7 @@ The API will be accessible at `http://127.0.0.1:8000/`.
 ### Available Endpoints
 
 - **Register Customer:**
-  `POST /register-customer`
+  `POST /register/`
   
   Request Body:
 
@@ -120,4 +119,3 @@ For detailed API documentation, visit [API Documentation](#).
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 ```
 
-Replace placeholders like `your-username` with your actual username. Additionally, add specific information about your API documentation if it's generated and hosted elsewhere. Adjust the content to fit your project structure and details.
