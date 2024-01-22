@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Sum
 from .models import Customer, Loan
-from .serializers import CustomerRegistrationSerializer,EligibilityCheckSerializer,CreateLoanSerializer,LoanDetailsSerializer,LoanDetailsCustomerSerializer,CheckEligibilityRequestSerializer,CheckEligibilityResponseSerializer,CreateLoanRequestSerializer,CreateLoanResponseSerializer
+from .serializers import CustomerRegistrationSerializer,LoanDetailsSerializer,LoanDetailsCustomerSerializer,CheckEligibilityRequestSerializer,CheckEligibilityResponseSerializer,CreateLoanRequestSerializer,CreateLoanResponseSerializer
 from rest_framework.decorators import api_view
 
 from .tasks import ingest_customer_data, ingest_loan_data
@@ -97,6 +97,7 @@ def check_eligibility(request):
 
 
 
+
 def check_loan_eligibility(customer_id, credit_score, loan_amount, interest_rate):
     try:
         customer = Customer.objects.get(customer_id=customer_id)
@@ -160,6 +161,7 @@ def calculate_credit_score(customer_id):
         print(f"Error calculating credit score: {str(e)}")
 
     return 0  # Default credit score if calculation fails
+
 
 #  /create-loan
 @api_view(['POST'])
@@ -236,7 +238,7 @@ def view_loan_by_loan_id(request, loan_id):
             'tenure': loan.tenure,
         })
         return Response(serializer.data, status=status.HTTP_200_OK)
-    except Loan.DoesNotExist:
+    except Loan.SharmasNotExist:
         return Response({'error': 'Loan not found'}, status=status.HTTP_404_NOT_FOUND)
     
 
@@ -269,7 +271,7 @@ def view_loans_by_customer(request, customer_id):
             loan_data.append(serializer.data)
 
         return Response(loan_data, status=status.HTTP_200_OK)
-    except Loan.DoesNotExist:
+    except Loan.SharmasNotExist:
         return Response({'error': 'No loans found for the customer'}, status=status.HTTP_404_NOT_FOUND)
     
 

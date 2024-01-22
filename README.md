@@ -49,13 +49,43 @@ Credit Approval System  API is a Django application that provides RESTful APIs f
    python manage.py migrate
    ```
 
-7.  Data Import
-  Before starting the development server, run the following script to import data from Excle(xlsx) files:
+7. Data Import
+   Before starting the development server, run the following script to import data from Excle(xlsx) files:
   
    ```bash
    python import_data.py
+
    ```
-8. Database Sequence Reset
+
+8. To use PostgreSQL, comment out the following lines in `ApprovalHub/settings.py`:
+
+   ```python
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.sqlite3',
+           'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+       }
+   }
+   ```
+
+   and uncomment the following lines:
+
+   ```python
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': '(databse name)',
+           'USER': 'postgres',
+           'PASSWORD': 'postgres',
+           'HOST': 'localhost',
+           'PORT': '5432',
+       }
+   }
+   ```
+
+
+9. Database Sequence Reset Note: This step is required only if you are using PostgreSQL as the database. If you are using SQLite, skip this step.
+
   To ensure proper auto-incrementing sequence, set the next value of the sequence:
   
    ```bash
@@ -84,8 +114,8 @@ The API will be accessible at `http://127.0.0.1:8000/`.
 
   ```json
   {
-    "first_name ": "John",
-    "last_name": "Doe",
+    "first_name ": "Rohan",
+    "last_name": "Sharma",
     "age" :21,
     "monthly_income": 100000,
     "phone_number": 1234567890
